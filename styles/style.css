@@ -1,0 +1,524 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+
+    /* General Variables */
+    --text-color-white : #ffff;
+    --text-color-black : #0000;
+    --size-0 : 12px; /* This is for the size of labels and text in the button*/
+    --size-1 : 1rem; /*This is for the normal text that is 16px*/
+    --size-2: 1.5rem;
+
+    /* For Reusable Components */
+    --button-color : #272727;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+/* Header HTML element */
+
+/* NOTE: */
+/* In every child there will be _ as separation
+Example: If the header element has a child and want to add custom styling in css
+just do like this parent_child
+
+if you want to add custom styling in grandchild just add _ _ (double)
+*/
+.container-90{
+    max-width: 90%;
+    margin: 0 auto;
+}
+/* Error div which is in the upper part of the header element */
+.err-div {
+    background-color: rgba(0, 0, 0, 0.288);
+    position: fixed;
+    backdrop-filter: blur(2px);
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease-in-out; /* Added transition */
+}
+.error-message-container{
+    background-color: #ffff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem 1.5rem;
+
+
+}
+.error {
+    /* background-color: #ffff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem 1.5rem; */
+
+}
+
+/* End */
+header{
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    padding-top: 1rem;
+    background-color: var(--text-color-white);
+    padding-bottom: 1rem;
+    box-shadow: 0px 10px 15px 0px rgba(0,0,0,0.1);
+}
+.header_logo{
+    width: 150px;
+}
+/* Testing Phase */
+main {
+    /* Need to apply Media Queries in larger screens that's why there is no css design attached */
+}
+/* Form */
+form{
+    margin-top: 2rem;
+}
+form > h1{
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--button-color);
+}
+/* Divider */
+.divider{
+    width: 100%;
+    height: 10px;
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 8%, rgba(255,255,255,1) 100%);
+    margin-bottom: 1.5rem;
+    margin-top: .5rem;
+}
+/* Form Floating */
+.form-floating {
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.377);
+    margin-bottom: 5px;
+}
+.form-floating > input:not([type=submit]) {
+    padding: 18px 10px 5px 10px;
+    height: 100%;
+    width: 100%;
+    outline: none;
+}
+.form-floating > label {
+    position: absolute;
+    left: 10px;
+    top: 0;
+    font-size: var(--size-0)
+}
+#toggleShowPassword{
+    position: absolute;
+    right: 0px;
+    padding: .2rem;
+    left: 90%;
+    /* background-color: aquamarine; */
+    z-index: 99;
+    font-size: var(--size-0)
+}
+input[type=submit] {
+    padding: 10px 0;
+    width: 100%;
+    outline: none;
+    background-color: var(--button-color);
+    text-align: center;
+    color: var(--text-color-white);
+    font-size: var(--size-0);
+}
+form > p {
+    font-size: var(--size-0);
+}
+
+/* Section 2 */
+.section-2{
+    background-image: url('../assets/img3.svg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Footer */
+footer{
+    font-size: var(--size-0);
+    text-align: center;
+    padding: 10px 0;
+}
+
+
+/* Create Account Page Mobile design */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr; /* 1 column layout */
+    grid-template-areas: 
+        'idnumber'
+        'fname'
+        'lname'
+        'minitial'
+        'ename'
+        'email'
+        'sex'
+        'purok'
+        'brgy'
+        'city'
+        'province'
+        'country'
+        'zip'
+        'username'
+        'password'
+        're-enter-password'
+        'submitBtn';
+}
+.grid-item-1,
+.grid-item-2,
+.grid-item-3,
+.grid-item-4,
+.grid-item-5,
+.grid-item-6,
+.grid-item-7,
+.grid-item-8,
+.grid-item-9,
+.grid-item-10,
+.grid-item-11,
+.grid-item-12,
+.grid-item-13,
+.grid-item-14,
+.grid-item-15,
+.grid-item-16,
+.grid-item-17 {
+    width: 100%; /* Ensure all grid items take up full width */
+    /* margin-top: -1rem; This is for desktop design */
+}
+
+
+/* For PC 1024 x 768 design */
+/* Added 6px */
+@media(min-width : 1024px){
+    .header_logo{
+        width: 250px;
+    }
+    main{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .section-2, .section-1{
+        height: 100%;
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    form > h1{
+        font-size: 1.4rem; /*Added 6px for desktop design this for 1920 but for 1024 I will add about .2rem only*/
+        font-weight: 700;
+        color: var(--button-color);
+    }
+    form{
+        width: 100%;
+        margin-top: 10px;
+    }
+    /* Added 6px until to the next comment : This is for the 1920px */
+    /* For 1024px X 768 : I will remove 2 px */
+
+    .form-floating{
+        margin-bottom: 6px;
+    }
+    .form-floating > input:not([type=submit]) {
+        padding: 16px 8px 3px 8px;
+    }
+    .form-floating > label {
+        left: 8px;
+    }
+    input[type=submit] {
+        padding: 8px 0;
+        font-size: .8rem; /*Added 4px for 1920px but This design is for 1024px I will remove .4rem that is equal to .8rem*/ 
+    }
+    /* Ended of form adding 6px */
+    footer {
+        font-size: var(--size-0);
+        text-align: center;
+        padding: 1rem 0;
+        box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1); /* Shadow on top */
+    } 
+
+
+
+    /* Registration page design */
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+            'idnumber idnumber'
+            'fname lname'
+            'minitial ename'
+            'email email'
+            'sex sex'
+            'purok brgy'
+            'city province'
+            'country zip'
+            'username username'
+            'password re-enter-password'
+            'submitBtn submitBtn';
+        gap: 10px;
+    }
+    
+    .grid-item-1 {
+        grid-area: idnumber;
+    }
+    
+    .grid-item-2 {
+        grid-area: fname;
+    }
+    
+    .grid-item-3 {
+        grid-area: lname;
+    }
+    
+    .grid-item-4 {
+        grid-area: minitial;
+    }
+    
+    .grid-item-5 {
+        grid-area: ename;
+    }
+    
+    .grid-item-6 {
+        grid-area: email;
+    }
+    
+    .grid-item-7 {
+        grid-area: sex;
+    }
+    
+    .grid-item-8 {
+        grid-area: purok;
+    }
+    
+    .grid-item-9 {
+        grid-area: brgy;
+    }
+    
+    .grid-item-10 {
+        grid-area: city;
+    }
+    
+    .grid-item-11 {
+        grid-area: province;
+    }
+    
+    .grid-item-12 {
+        grid-area: country;
+    }
+    
+    .grid-item-13 {
+        grid-area: zip;
+    }
+    
+    .grid-item-14 {
+        grid-area: username;
+    }
+    
+    .grid-item-15 {
+        grid-area: password;
+    }
+    
+    .grid-item-16 {
+        grid-area:  re-enter-password;
+    }
+    .grid-item-17 {
+        grid-area: submitBtn;
+    }
+    .grid-item-1,
+    .grid-item-2,
+    .grid-item-3,
+    .grid-item-4,
+    .grid-item-5,
+    .grid-item-6,
+    .grid-item-7,
+    .grid-item-8,
+    .grid-item-9,
+    .grid-item-10,
+    .grid-item-11,
+    .grid-item-12,
+    .grid-item-13,
+    .grid-item-14,
+    .grid-item-15,
+    .grid-item-16,
+    .grid-item-17 {
+        margin-top: -.7rem;
+    }
+    
+}
+
+/* This is for 1920px by 1080px */
+@media(min-width : 1920px){
+    .header_logo{
+        width: 250px;
+    }
+    main{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .section-2, .section-1{
+        height: 100%;
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    form > h1{
+        font-size: 1.8rem; /*Added 6px for desktop design*/
+        font-weight: 700;
+        color: var(--button-color);
+    }
+    form{
+        width: 100%;
+        margin-top: -5rem;
+    }
+    /* Added 6px until to the next comment */
+    .form-floating{
+        margin-bottom: 11px;
+    }
+    .form-floating > input:not([type=submit]) {
+        padding: 24px 16px 11px 16px;
+    }
+    .form-floating > label {
+        left: 16px;
+    }
+    input[type=submit] {
+        padding: 10px 0;
+        font-size: 1rem; /*Added 4px*/
+    }
+    /* Ended of form adding 6px */
+    footer {
+        font-size: var(--size-1);
+        text-align: center;
+        padding: 1rem 0;
+        box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1); /* Shadow on top */
+    } 
+
+
+
+    /* Registration page design */
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+            'idnumber idnumber'
+            'fname lname'
+            'minitial ename'
+            'email email'
+            'sex sex'
+            'purok brgy'
+            'city province'
+            'country zip'
+            'username username'
+            'password re-enter-password'
+            'submitBtn submitBtn';
+        gap: 10px;
+    }
+    
+    .grid-item-1 {
+        grid-area: idnumber;
+    }
+    
+    .grid-item-2 {
+        grid-area: fname;
+    }
+    
+    .grid-item-3 {
+        grid-area: lname;
+    }
+    
+    .grid-item-4 {
+        grid-area: minitial;
+    }
+    
+    .grid-item-5 {
+        grid-area: ename;
+    }
+    
+    .grid-item-6 {
+        grid-area: email;
+    }
+    
+    .grid-item-7 {
+        grid-area: sex;
+    }
+    
+    .grid-item-8 {
+        grid-area: purok;
+    }
+    
+    .grid-item-9 {
+        grid-area: brgy;
+    }
+    
+    .grid-item-10 {
+        grid-area: city;
+    }
+    
+    .grid-item-11 {
+        grid-area: province;
+    }
+    
+    .grid-item-12 {
+        grid-area: country;
+    }
+    
+    .grid-item-13 {
+        grid-area: zip;
+    }
+    
+    .grid-item-14 {
+        grid-area: username;
+    }
+    
+    .grid-item-15 {
+        grid-area: password;
+    }
+    
+    .grid-item-16 {
+        grid-area:  re-enter-password;
+    }
+    .grid-item-17 {
+        grid-area: submitBtn;
+    }
+    .grid-item-1,
+    .grid-item-2,
+    .grid-item-3,
+    .grid-item-4,
+    .grid-item-5,
+    .grid-item-6,
+    .grid-item-7,
+    .grid-item-8,
+    .grid-item-9,
+    .grid-item-10,
+    .grid-item-11,
+    .grid-item-12,
+    .grid-item-13,
+    .grid-item-14,
+    .grid-item-15,
+    .grid-item-16,
+    .grid-item-17 {
+        margin-top: -.7rem;
+    }
+    
+}
+
+
+
+
+
+
