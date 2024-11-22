@@ -11,6 +11,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
     integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        #toggleShowPassword{
+            position: absolute;
+            right: 10px;
+            top: 30%;
+        }
+    </style>
 </head>
 <body>
     <div class="err-div">
@@ -97,10 +105,10 @@
                         <input type="text" name="username" id="username" >
                     </div>
                     <div class="form-floating grid-item-15">
-                      <label for="password" style="display: flex; gap:1rem;">Password
-                        <div id="password-strength"></div>
                         <i class="fa-solid fa-eye" id="toggleShowPassword"></i>
-                    </label>
+                        <label for="password" style="display: flex; gap:1rem;">Password
+                            <div id="password-strength"></div>
+                        </label>
                       <input type="password" name="password" id="password" >
                     </div>
                     <div class="form-floating grid-item-16">
