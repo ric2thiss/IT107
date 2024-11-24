@@ -59,7 +59,8 @@ function Login($username, $password) {
                 $stmtUpdate->execute();
 
                 // Password is correct, return success
-                echo json_encode(["success" => "Login successful"]);
+                echo json_encode(["success" => "Login successful", "user" => $user]);
+                
             } else {
                 // Handle incorrect password
                 $failedAttempts = $user["failed_attempts"] + 1;

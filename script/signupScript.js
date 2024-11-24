@@ -1,4 +1,6 @@
-
+if(localStorage.getItem("user")){
+    window.location.href = "index.php";
+}
 // Validate length of input
 function validateLength(label, value, min, max, specificErr = "characters") {
     if (value.length < min) {

@@ -1,5 +1,5 @@
-# Restrict access to script.js
-<Files "script/script.js">
+# Restrict access to javascript
+<Files "script">
     Require all denied
     <If "%{HTTP_REFERER} =~ m#^http://localhost/paquibot/#">
         Require all granted
@@ -7,7 +7,7 @@
 </Files>
 
 # Restrict access to style.css
-<Files "styles/style.css">
+<Files "styles">
     Require all denied
     <If "%{HTTP_REFERER} =~ m#^http://localhost/paquibot/#">
         Require all granted

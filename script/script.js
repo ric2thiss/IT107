@@ -1,5 +1,7 @@
 // "use strict";
-
+if(localStorage.getItem("user")){
+    window.location.href = "index.php";
+}
 // Specified functions
 const toggleShowPassword = document.getElementById("toggleShowPassword");
 toggleShowPassword.addEventListener("click", () => {
