@@ -1,0 +1,6 @@
+<Files "script.js">
+    Require all denied
+    <If "%{HTTP_REFERER} =~ m#^http://localhost/paquibot/#">
+        Require all granted
+    </If>
+</Files>

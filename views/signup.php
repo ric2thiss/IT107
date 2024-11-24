@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real Estate Management System - Create Account</title>
-    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/style.css?v=1.0">
+
     <!-- TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
@@ -18,6 +19,9 @@
             right: 10px;
             top: 30%;
         }
+        .red{
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -30,9 +34,13 @@
         </div>
     </div>
     <header>
-        <section class="container-90">
+        <section class="container-90 top-nav">
             <div class="header_logo">
                 <img src="../assets/img2.svg" alt="LOGO">
+            </div>
+            <div class="flex gap-10">
+                <a href="index.php">Home</a>
+                <a href="login.php">Login</a>
             </div>
         </section>
             <!-- User Profile, notifs, search bar or more must be placed here in larger screen -->
@@ -50,8 +58,13 @@
                 <div class="grid-container">
                     <div class="form-floating grid-item-1">
                         <label for="idnumber">ID No: </label>
-                        <input type="number" name="idnumber" id="idnumber" placeholder="" maxlength="10">
+                        <input type="text" name="idnumber" id="idnumber" placeholder="xxxx-xxxx" maxlength="9">
                     </div>
+                    <div class="form-floating email-add">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" placeholder="" >
+                    </div>
+
                     <div class="form-floating grid-item-2">
                         <label for="firstname">First Name </label>
                         <input type="text" name="firstname" id="firstname" placeholder="" >
@@ -65,16 +78,29 @@
                         <input type="text" name="middleinitial" id="middleinitial" placeholder="">
                     </div>
                     <div class="form-floating grid-item-5">
-                        <label for="extensionname">Extension Name</label>
-                        <input type="text" name="extensionname" id="extensionname" placeholder="">
+                        <!-- <label for="extensionname">Extension Name</label> -->
+                        <!-- <input type="text" name="extensionname" id="extensionname" placeholder=""> -->
+                        <select name="extensionname" class="text-center" id="extensionname" style="width: 100%;height:100%;">
+                            <option value="">Select Extention Name (Optional)</option>
+                            <option value="I">I</option>
+                            <option value="II">II</option>
+                            <option value="I">III</option>
+                            <option value="I">IV</option>
+                            <option value="I">V</option>
+                        </select>
                     </div>
                     <div class="form-floating grid-item-6">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" placeholder="" >
+                        <label for="birtdate">Birthdate</label>
+                        <input type="date" name="birthdate" id="birthdate" placeholder="">
                     </div>
-                    <div class="grid-item-7 mb-2" style="display: flex;gap:5px;">
-                        <input type="radio" name="sex" id="male"><label for="male">Male</label>
-                        <input type="radio" name="sex" id="female"><label for="female">Female</label>
+                    <div class="grid-item-7 mb-2" style="display:flex;align-items:center;gap:5px; justify-content: space-between;">
+                        <div style="display:flex;align-items:center;gap:1rem;">
+                            <input type="radio" name="sex" id="male" value="Male"><label for="male">Male</label>
+                            <input type="radio" name="sex" id="female" value="Female"><label for="female">Female</label>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:5px;" class="flex">
+                            <label for="age">Age : </label><input type="text" id="age" class="px-2 w-20" disabled>
+                        </div>
                     </div>
                     <div class="form-floating grid-item-8">
                         <label for="purok">Purok</label>
@@ -109,7 +135,7 @@
                         <label for="password" style="display: flex; gap:1rem;">Password
                             <div id="password-strength"></div>
                         </label>
-                      <input type="password" name="password" id="password" >
+                      <input type="password" name="password" id="password">
                     </div>
                     <div class="form-floating grid-item-16">
                         <label for="reenterpassword" style="display: flex; gap:1rem;">Re-Enter Password

@@ -92,7 +92,7 @@ function validateLength(label, value, min, max, specificErr = "characters") {
     if (value.length < min) {
         return `${label} must be at least ${min} ${specificErr}.`;
     } else if (value.length > max) {
-        return `${label} must be no more than ${max} ${specificErr}.`;
+        return `${label} must not more than ${max} ${specificErr}.`;
     }
     return false;
 }
@@ -136,7 +136,7 @@ function hasConsecutiveChars(value) {
 function validateNameCapitalization(label = "Input",name) {
     const regex = /^[A-Z][a-z]+(?: [A-Z][a-z]+)*$/;
     if (!regex.test(name)) {
-        return `${label}: The first letter of each word must be capitalized (e.g., Juan Carlo).`;
+        return `${label}: The first letter of each word must be capitalized (e.g., First Letter Of Each Word).`;
     }
     return false;
 }
@@ -147,7 +147,7 @@ function validateFirstLetterCapitalization(label = "Input",str) {
     }
     return false;
 }
-
+// check if there is a digit in string or str
 function hasDigit(label, str){
     if( /\d/.test(str)){
         return `${label} must not contain a number`;
@@ -167,7 +167,7 @@ function validateMiddleInitial(middleInitial) {
         return "Middle initial must be capitalized.";
     }
     if (middleInitial.length > 1) {
-        return "Middle initial must not greater than 2 characters.";
+        return "Middle initial must be less than 2 letters.";
     }
     return false;
 }
@@ -201,6 +201,29 @@ function validateAddress(purok, barangay, city, province, country, zip) {
     return null;
 }
 
+
+function validateIdNumber(idnumber) {
+    // Ensure the format is xxxx-xxxx (4 digits, a dash, then 4 digits)
+    const pattern = /^\d{4}-\d{4}$/;
+    if(/[a-zA-Z]/.test(idnumber)){
+        return "ID Number must not contain any letters.";
+    }
+
+    if (/[^0-9-]/.test(idnumber)) {
+        return "ID Number must not contain any characters other than numbers and a dash (-).";
+    }
+
+    // Validate the format
+    if (!pattern.test(idnumber)) {
+        return "Invalid ID format! : ID Number must follow the format xxxx-xxxx.";
+    }
+
+    return false; // No errors, ID Number is valid
+}
+
+
+ 
+
 // Validate email
 function validateEmail(email) {
     const atSymbolIndex = email.indexOf("@");
@@ -226,6 +249,35 @@ function validateSex(sex) {
     }
     return false;
 }
+// Validate birthdate and age
+function validateBirthdate(date, age){
+    if(!date){
+        return "Please enter a birthdate.";
+    }
+    if(age < 18){
+        return "You must be at least 18 years old to register.";
+    }
+    return false;
+
+}
+
+let age = 0;
+let date = 0;
+const bdate = document.getElementById("birthdate")
+    bdate.addEventListener("input", function(){
+        date = bdate.value
+        const dateParts = date.split("-");
+        const year = dateParts[0];
+        const month = dateParts[1];
+        const day = dateParts[2];
+        const dateObject = new Date(year, month - 1, day);
+        age = Math.floor((Date.now() - dateObject.getTime()) / (1000 *
+        60 * 60 * 24 * 365.25));
+        document.getElementById("age").value = age;
+        console.log(date)
+    })
+
+
 
 // Check password strength
 function checkPasswordStrength(password) {
@@ -256,6 +308,9 @@ function validatePasswordMatch(password, reEnteredPassword) {
 // Registration form validation
 function validateRegForm(event) {
     event.preventDefault();
+    // console.log(`Submitted ${date}`)
+    // console.log(`Submitted ${age}`)
+
     const form = document.forms['form'];
 
     // Get input values
@@ -275,7 +330,7 @@ function validateRegForm(event) {
     const username = form["username"].value.trim();
     const password = form["password"].value.trim();
     const reenterpassword = form["reenterpassword"].value.trim();
-
+    
     // Check double spaces
     // if (hasDoubleSpace(firstname) || hasDoubleSpace(lastname) || hasDoubleSpace(username)) {
     //     // alert("No double spaces allowed in names or username.");
@@ -284,84 +339,64 @@ function validateRegForm(event) {
     //     return;
     // }
 
-    if (hasDoubleSpace(firstname)) {
-        errors.textContent = `Double spaces are not allowed in the First Name field.`;
-        errorDivContainer.style.transform = "translateX(0)";
-        return;
-    }
-    if (hasDoubleSpace(lastname)) {
-        errors.textContent = `Double spaces are not allowed in the Last Name field.`;
-        errorDivContainer.style.transform = "translateX(0)";
-        return;
-    }
-    if (hasDoubleSpace(email)) {
-        errors.textContent = `Double spaces are not allowed in the Email field.`;
-        errorDivContainer.style.transform = "translateX(0)";
-        return;
-    }
-    if (hasDoubleSpace(purok)) {
-        errors.textContent = `Double spaces are not allowed in the Purok address field.`;
-        errorDivContainer.style.transform = "translateX(0)";
-        return;
-    }
-    if (hasDoubleSpace(barangay)) {
-        errors.textContent = `Double spaces are not allowed in the Barangay address field.`;
-        errorDivContainer.style.transform = "translateX(0)";
-        return;
-    }
-    if (hasDoubleSpace(city)) {
-        errors.textContent = `Double spaces are not allowed in the City address field.`;
-        errorDivContainer.style.transform = "translateX(0)";
-        return;
-    }
-    if (hasDoubleSpace(province)) {
-        errors.textContent = `Double spaces are not allowed in the Province address field.`;
-        errorDivContainer.style.transform = "translateX(0)";
-        return;
-    }
-    if (hasDoubleSpace(country)) {
-        errors.textContent = `Double spaces are not allowed in the Country field.`;
-        errorDivContainer.style.transform = "translateX(0)";
-        return;
-    }
-    if (hasDoubleSpace(username)) {
-        errors.textContent = `Double spaces are not allowed in the Username field.`;
-        errorDivContainer.style.transform = "translateX(0)";
-        return;
-    }
-    if (hasDoubleSpace(password)) {
-        errors.textContent = `Double spaces are not allowed in the Password field.`;
-        errorDivContainer.style.transform = "translateX(0)";
-        return;
-    }
-    if (hasDoubleSpace(reenterpassword)) {
-        errors.textContent = `Double spaces are not allowed in the Re-Entered Password field.`;
-        errorDivContainer.style.transform = "translateX(0)";
-        return;
-    }
-    
+    // Array of objects for fields and their corresponding labels
+    const DoubleSpacingValidation = [
+        { field: firstname, label: "First Name" },
+        { field: lastname, label: "Last Name" },
+        { field: email, label: "Email" },
+        { field: purok, label: "Purok address" },
+        { field: barangay, label: "Barangay address" },
+        { field: city, label: "City address" },
+        { field: province, label: "Province address" },
+        { field: country, label: "Country" },
+        { field: username, label: "Username" },
+        { field: password, label: "Password" },
+        { field: reenterpassword, label: "Re-Entered Password" },
+    ];
 
-    // Check three consecutive characters
-    const fieldsToCheck = [firstname, lastname, username, password, purok, barangay, city, province, country];
-    for (let field of fieldsToCheck) {
+    // Loop through each field to check for double spaces
+    for (let { field, label } of DoubleSpacingValidation) {
+        if (hasDoubleSpace(field)) {
+            errors.textContent = `Double spaces are not allowed in the ${label} field.`;
+            errorDivContainer.style.transform = "translateX(0)";
+            return;
+        }
+    }
+
+    
+    // Check for three consecutive characters
+    const fieldsToCheck = [
+        { field: firstname, label: "First Name" },
+        { field: lastname, label: "Last Name" },
+        { field: username, label: "Username" },
+        { field: password, label: "Password" },
+        { field: purok, label: "Purok" },
+        { field: barangay, label: "Barangay" },
+        { field: city, label: "City" },
+        { field: province, label: "Province" },
+        { field: country, label: "Country" },
+    ];
+
+    for (let { field, label } of fieldsToCheck) {
         if (hasConsecutiveChars(field)) {
-            // alert("No three consecutive identical characters allowed.");
-            errors.textContent = `No three consecutive identical characters allowed.`;
-            errorDivContainer.style.transform = "translateX(0)"; 
+            // Display specific error message for the field
+            errors.textContent = `${label} is not allowed to have three identical letters or characters in a row.`;
+            errorDivContainer.style.transform = "translateX(0)";
             return;
         }
     }
 
     // Validate fields
-    const idnumberValidation = validateLength("ID No.", idnumber, 5, 10, "numbers") || hasSpecialChar("ID No. " , idnumber)
+    const idnumberValidation = validateLength("ID No.", idnumber, 8, 9, "numbers (ex. 1234-5678)") ||validateIdNumber(idnumber)|| hasSpecialChar("ID No. " , idnumber);
+    const emailValidation = validateLength("Email", email, 5, 35, " characters long, excluding '@email.com")||validateEmail(email);
     const firstnameValidation = validateLength("First Name", firstname, 3, 15) || hasDigit("First Name",firstname) || hasSpecialChar("First Name " , firstname)  || validateNameCapitalization("First Name ", firstname)
     const lastnameValidation = validateLength("Last Name", lastname, 3, 15)||  hasSpecialChar("Last Name " , lastname) || hasDigit("Last Name", lastname) || validateNameCapitalization("Last Name " , lastname);
     const middleinitialValidation = hasDigit("Middle Initial", middleinitial) || validateMiddleInitial(middleinitial);
-    const emailValidation = validateEmail(email);
     const extensionnameValidation = validateNameExtension(extensionname);
+    const birthdateValidation = validateBirthdate(date, age);
     const sexValidation = validateSex(sex);
     const addressValidation = validateAddress(purok, barangay, city, province, country, zip);
-    const usernameValidation = validateLength("Username", username, 3, 50);
+    const usernameValidation = validateLength("Username", username, 5, 30);
     // const usernameExists = checkUsernameExists(username); // Placeholder for checking username existence. Already implemented the logic in the server
     const passwordValidation = checkPasswordStrength(password);
     const passwordMatchValidation = validatePasswordMatch(password, reenterpassword);
@@ -369,6 +404,12 @@ function validateRegForm(event) {
     // console.log(idnumberValidation)
     if(idnumberValidation){
         errors.textContent = idnumberValidation;
+        errorDivContainer.style.transform = "translateX(0)";
+        return;
+    }
+    if (emailValidation) {
+        // alert(emailValidation);
+        errors.textContent = emailValidation;
         errorDivContainer.style.transform = "translateX(0)";
         return;
     }
@@ -396,13 +437,12 @@ function validateRegForm(event) {
         errorDivContainer.style.transform = "translateX(0)";
         return;
     }
-    if (emailValidation) {
-        // alert(emailValidation);
-        errors.textContent = emailValidation;
+    if (birthdateValidation) {
+        // alert(birthdateValidation);
+        errors.textContent = birthdateValidation;
         errorDivContainer.style.transform = "translateX(0)";
         return;
     }
-
     if (sexValidation) {
         // alert(sexValidation);
         errors.textContent = sexValidation;
@@ -444,6 +484,7 @@ function validateRegForm(event) {
     }
 
     // alert("Registration is successful!");
+    console.log("Before inserting to db : " + idnumber);
 
     // After the restriction: This part make the data to be an object form
         const registrationData = {
@@ -461,7 +502,9 @@ function validateRegForm(event) {
             username,
             password,
             middleinitial,
-            extensionname
+            extensionname,
+            date,
+            age
         };
     
         // Send POST request to this endpoint 
@@ -481,53 +524,13 @@ function validateRegForm(event) {
             return response.json(); // Ensure the response is JSON
         })
         .then(data => {
-            // Query DOM elements
-            const successMessage = document.querySelector(".message");
-            const errorMessage = document.querySelector(".error-message-container");
-            const errorDivContainer = document.querySelector(".err-div");
-
             // Handle successful registration response
             if (data.success) {
-                // successMessage.innerHTML = `<i class="fa-solid fa-circle-check" style="color: green;"></i> ${data.success}`;
-                // successMessage.style.color = "green";
-                // errorDivContainer.style.transform = "translateX(0)"; // Show success message
 
-                // setTimeout(()=>{
-                //     errors.innerHTML = `
-                //     <hr>
-                //     <h5><strong>Account Details</strong></h5>
-                //     <hr>
-                //     <p>First Name : <u>${firstname}</u></p>
-                //     <p>Last Name : <u>${lastname}</u></p>
-                //     <p>Middle Initial : <u>${middleinitial}</u></p>
-                //     <p>Extension Name : <u>${extensionname}</u></p>
-                //     <p>Email : <u>${email}</u></p>
-                //     <p>Sex : <u>${sex.textContent}</u></p>
-                //     <p>Purok : <u>${purok}</u></p>
-                //     <p>Barangay : <u>${barangay}</u></p>
-                //     <p>City : <u>${city}</u></p>
-                //     <p>Province : <u>${province}</u></p>
-                //     <p>Country : <u>${country}</u></p>
-                //     <p>Zip : <u>${zip}</u></p>
-                //     <hr>
-                //     <h5><strong>Your Account</strong></h5>
-                //     <hr>
-                //     <p>Username : <u>${username}</u></p>
-                //     <p>Password : <u>${password}</u></p>
-                    
-                //     `;
-                //     errorDivContainer.addEventListener("click", ()=>{
-                //         window.location ="../views/index.html";
-                //     })
-                // }, 3000)
                 alert(data.success)
                 window.location.href = "../views/login.php";
             } else if (data.error) {
                 alert(data.error)
-                // error.textContent = '';
-                // errorMessage.textContent = data.error;
-                // errorMessage.style.color = "red";
-                // errorDivContainer.style.transform = "translateX(0)"; // Show error message
             }
 
             // Log the response data for debugging
@@ -545,44 +548,44 @@ function validateRegForm(event) {
 
 // Login form validation 
 
-function validateLoginForm(event){
-    event.preventDefault();
+// function validateLoginForm(event){
+//     event.preventDefault();
 
-    const form = document.forms["form"];
+//     const form = document.forms["form"];
 
-    // Get input values
-    const username = form["username"].value.trim();
-    const password = form["password"].value.trim();
+//     // Get input values
+//     const username = form["username"].value.trim();
+//     const password = form["password"].value.trim();
 
-    const validateUsername = validateLength("Username", username, 3, 65);
-    const validatedPassword = validateLength("Password", password, 8, 255);
+//     const validateUsername = validateLength("Username", username, 3, 65);
+//     const validatedPassword = validateLength("Password", password, 8, 255);
 
-    if(validateUsername){
-        errors.textContent = validateUsername;
-        errorDivContainer.style.transform = "translateX(0)"; 
-        return;
-    }
+//     if(validateUsername){
+//         errors.textContent = validateUsername;
+//         errorDivContainer.style.transform = "translateX(0)"; 
+//         return;
+//     }
 
-    if(validatedPassword){
-        errors.textContent = validatedPassword;
-        errorDivContainer.style.transform = "translateX(0)"; 
-        return;
-    }
+//     if(validatedPassword){
+//         errors.textContent = validatedPassword;
+//         errorDivContainer.style.transform = "translateX(0)"; 
+//         return;
+//     }
 
-    if (hasDoubleSpace(username) || hasDoubleSpace(password)){
-        // alert("No double spaces allowed in names or username.");
-        errors.textContent = `No double spaces allowed in username or password`;
-        errorDivContainer.style.transform = "translateX(0)"; 
-        return;
-    }
+//     if (hasDoubleSpace(username) || hasDoubleSpace(password)){
+//         // alert("No double spaces allowed in names or username.");
+//         errors.textContent = `No double spaces allowed in username or password`;
+//         errorDivContainer.style.transform = "translateX(0)"; 
+//         return;
+//     }
     
 
-    console.log(true)
+//     console.log(true)
 
-    return true;
+//     return true;
 
     
 
 
-}
+// }
 

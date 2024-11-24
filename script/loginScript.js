@@ -36,8 +36,8 @@ function validateLoginForm(event) {
     const username = form["username"].value.trim();
     const password = form["password"].value.trim();
 
-    const validateUsername = validateLength("Username", username, 3, 65);
-    const validatedPassword = validateLength("Password", password, 8, 255);
+    const validateUsername = validateLength("Username", username, 3, 10);
+    const validatedPassword = validateLength("Password", password, 8, 10);
 
     // Clear any previous messages
     message.textContent = "";
@@ -67,7 +67,6 @@ function validateLoginForm(event) {
         return false;
     }
 
-    // If all validations pass, submit the form
-    form.submit();
-    return true;
+    // If all validations pass, use fetch to send data to endpoint
+    
 }

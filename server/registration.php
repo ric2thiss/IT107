@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // Retrieve and trim form inputs
-    $idnumber = trim($data["idnumber"] ?? '');
+    $idnumber = $data["idnumber"];
     $firstname = trim($data["firstname"] ?? '');
     $lastname = trim($data["lastname"] ?? '');
     $middleinitial = trim($data["middleinitial"] ?? '');
@@ -31,6 +31,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = trim($data["username"] ?? '');
     $password = trim($data["password"] ?? '');
     $reenterpassword = trim($data["reenterpassword"] ?? '');
+    $age = trim($data["age"] ?? '');
+    $birthdate = trim($data["date"] ?? ''); // assuming the date comes as a string
+
+    // Validate age
+    if ($age < 18) {
+        echo json_encode(["error" => "Age must be 18 or above."]);
+        exit;
+    }
 
     // Validate passwords match
     // if ($password != $reenterpassword) {
@@ -44,6 +52,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo json_encode(["error" => "Invalid email format."]);
+        exit;
+    }
+
+    // Validate birthdate format (YYYY-MM-DD)
+    if (!empty($birthdate) && !preg_match("/^\d{4}-\d{2}-\d{2}$/", $birthdate)) {
+        echo json_encode(["error" => "Invalid birthdate format. Please use YYYY-MM-DD."]);
         exit;
     }
 
@@ -64,18 +78,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // Insert data into the database
-    if (insertData($idnumber, $firstname, $lastname, $middleinitial, $extensionname, $email, $sex, $purok, $barangay, $city, $province, $country, $zip, $username, $hashedPassword)) {
+    if (insertData($idnumber, $firstname, $lastname, $middleinitial, $extensionname, $email, $sex, $purok, $barangay, $city, $province, $country, $zip, $username, $hashedPassword, $age, $birthdate)) {
         echo json_encode(["success" => "Registration successful!"]);
     } else {
         echo json_encode(["error" => "An error occurred. Please try again."]);
     }
 }
 
-function insertData($idnumber, $firstname, $lastname, $middleinitial, $extensionname, $email, $sex, $purok, $barangay, $city, $province, $country, $zip, $username, $password) {
+function insertData($idnumber, $firstname, $lastname, $middleinitial, $extensionname, $email, $sex, $purok, $barangay, $city, $province, $country, $zip, $username, $password, $age, $birthdate) {
     try {
         $conn = DbConnection(); // Get the database connection
-        $sql = "INSERT INTO users_credential (idnumber, First_Name, Last_Name, Middle_Initial, Extension_Name, Email, Sex, Purok, Barangay, City, Province, Country, Zip_Code, Username, Password)
-                VALUES (:idnumber, :firstname, :lastname, :middleinitial, :extensionname, :email, :sex, :purok, :barangay, :city, :province, :country, :zip, :username, :password)";
+        $sql = "INSERT INTO users_credential (idnumber, First_Name, Last_Name, Middle_Initial, Extension_Name, Email, Sex, Purok, Barangay, City, Province, Country, Zip_Code, Username, Password, age, birthdate)
+                VALUES (:idnumber, :firstname, :lastname, :middleinitial, :extensionname, :email, :sex, :purok, :barangay, :city, :province, :country, :zip, :username, :password, :age, :birthdate)";
 
         $stmt = $conn->prepare($sql);
 
@@ -95,6 +109,8 @@ function insertData($idnumber, $firstname, $lastname, $middleinitial, $extension
         $stmt->bindParam(':zip', $zip);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':age', $age);
+        $stmt->bindParam(':birthdate', $birthdate);
 
         return $stmt->execute();
     } catch (PDOException $e) {
