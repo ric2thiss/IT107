@@ -27,7 +27,7 @@
             </div>
             <div class="flex gap-10">
                 <a id="myhomeBtn" href="index.php" >Home</a>
-                <a id="myregBton" href="signup.php">Register</a>
+                <a id="myregBtn" href="signup.php">Register</a>
             </div>
         </section>
     </header>

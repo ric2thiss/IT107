@@ -163,7 +163,7 @@ const loginButton = document.getElementById("loginButton");
 const registerLink = document.getElementById("registerLink");
 
 
-
+const myhomeBtn = document.getElementById("myhomeBtn");
 
 
 function setTimer(remainingTime) {
@@ -177,6 +177,21 @@ function setTimer(remainingTime) {
     registerLink.removeAttribute("href"); 
 
 
+    const myhomeBtn = document.getElementById("myhomeBtn");
+    const myregBtn = document.getElementById("myregBtn");
+
+    myhomeBtn.style.cursor = "not-allowed";
+    myhomeBtn.disabled = true;
+    myhomeBtn.href = "";
+    myhomeBtn.removeAttribute("href"); 
+
+    myregBtn.style.cursor = "not-allowed";
+    myregBtn.disabled = true;
+    myregBtn.href = "";
+    myregBtn.removeAttribute("href"); 
+    
+    history.pushState(null, null, location.href);
+
     const countdown = setInterval(() => {
         timeRemaining--;
         timerElement.textContent = `Too many failed attempts. Account locked for ${timeRemaining} seconds`;
@@ -185,10 +200,10 @@ function setTimer(remainingTime) {
         
         // // Disable the back button
         
-        history.pushState(null, null, location.href);
-        window.onpopstate = function () {
-            history.go(1);
-        };
+        // history.pushState(null, null, location.href);
+        // window.onpopstate = function () {
+        //     history.go(1);
+        // };
         
         
 
@@ -209,6 +224,14 @@ function setTimer(remainingTime) {
             registerLink.style.cursor = "pointer"; 
             registerLink.removeAttribute("disabled"); 
             registerLink.href = "signup.php";
+
+            myhomeBtn.style.cursor = "pointer"; 
+            myhomeBtn.removeAttribute("disabled"); 
+            myhomeBtn.href = "signup.php";
+
+            myregBtn.style.cursor = "pointer"; 
+            myregBtn.removeAttribute("disabled"); 
+            myregBtn.href = "signup.php";
 
         }
     }, 1000); // Update every 1 second
