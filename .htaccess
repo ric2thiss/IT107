@@ -1,25 +1,25 @@
-# Restrict access to javascript
-<Files "script">
-    Require all denied
-    <If "%{HTTP_REFERER} =~ m#^http://localhost/paquibot/#">
-        Require all granted
-    </If>
-</Files>
+# # Restrict access to javascript
+# <Files "script">
+#     Require all denied
+#     <If "%{HTTP_REFERER} =~ m#^http://localhost/paquibot/#">
+#         Require all granted
+#     </If>
+# </Files>
 
-# Restrict access to style.css
-<Files "styles">
-    Require all denied
-    <If "%{HTTP_REFERER} =~ m#^http://localhost/paquibot/#">
-        Require all granted
-    </If>
-</Files>
+# # Restrict access to style.css
+# <Files "styles">
+#     Require all denied
+#     <If "%{HTTP_REFERER} =~ m#^http://localhost/paquibot/#">
+#         Require all granted
+#     </If>
+# </Files>
 
-<Files "assets">
-    Require all denied
-    <If "%{HTTP_REFERER} =~ m#^http://localhost/paquibot/#">
-        Require all granted
-    </If>
-</Files>
+# <Files "assets">
+#     Require all denied
+#     <If "%{HTTP_REFERER} =~ m#^http://localhost/paquibot/#">
+#         Require all granted
+#     </If>
+# </Files>
 
-# Redirect 403 errors to 404.html
-ErrorDocument 403 http://localhost/paquibot/views/404.html
+# # Redirect 403 errors to 404.html
+# ErrorDocument 403 http://localhost/paquibot/views/404.html

@@ -16,3 +16,10 @@
         Require all granted
     </If>
 </Files>
+<Files "signupScript.js">
+    Require all denied
+    <If "%{HTTP_REFERER} =~ m#^http://localhost/paquibot/#">
+        Require all granted
+    </If>
+</Files>
+ErrorDocument 403 http://localhost/paquibot/views/404.html

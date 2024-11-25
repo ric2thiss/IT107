@@ -39,6 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo json_encode(["error" => "Age must be 18 or above."]);
         exit;
     }
+    if(passwordExists($password)){
+        echo json_encode(["error" => "Password already exists."]);
+        exit;
+    }
 
     // Validate passwords match
     // if ($password != $reenterpassword) {
@@ -127,6 +131,24 @@ function usernameExists($username) {
     $stmt->execute();
     return $stmt->fetchColumn() > 0;
 }
+
+function passwordExists($password){
+    $conn = DbConnection();
+
+    $stmt = $conn->prepare("SELECT Password FROM users_credential");
+    $stmt->execute();
+    
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($results as $result){
+        if(password_verify($password, $result["Password"])){
+            return true; 
+        }
+    }
+    
+    return false; 
+}
+
 
 function emailExists($email) {
     $conn = DbConnection();

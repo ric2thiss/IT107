@@ -78,8 +78,8 @@ if(localStorage.getItem("user")){
     window.location.href = "index.php";
 }
 document.addEventListener("DOMContentLoaded", function() {
-    let time = parseInt(localStorage.getItem("remainingTime"), 10); // Use radix 10 to ensure proper parsing
-    if (!Number.isNaN(time)) { // Check if the parsed value is a valid number
+    let time = parseInt(localStorage.getItem("remainingTime"), 10); 
+    if (!Number.isNaN(time)) { 
         setTimer(time);
     }
     return;
@@ -164,6 +164,8 @@ const registerLink = document.getElementById("registerLink");
 
 
 
+
+
 function setTimer(remainingTime) {
     const timerElement = document.getElementById("message");
     let timeRemaining = remainingTime;
@@ -181,21 +183,8 @@ function setTimer(remainingTime) {
         localStorage.setItem("remainingTime", timeRemaining)
         console.log(parseInt(localStorage.getItem("remainingTime")));
         
-
-
-
         // // Disable the back button
-        // (function preventBackNavigation() {
-        //     // Push the current state to history to prevent initial back navigation
-        //     history.pushState(null, null, location.href);
         
-        //     // Listen for the popstate event
-        //     window.onpopstate = function () {
-        //         // Force the user to stay on the same page
-        //         history.pushState(null, null, location.href);
-        //     };
-        // })();
-
         history.pushState(null, null, location.href);
         window.onpopstate = function () {
             history.go(1);
@@ -211,6 +200,7 @@ function setTimer(remainingTime) {
             localStorage.removeItem("remainingTime")
             timerElement.style.display = "none";
             window.onpopstate = null;
+            history.pushState(null, "", location.href);
 
 
             loginButton.style.cursor = "pointer"; 
@@ -219,13 +209,6 @@ function setTimer(remainingTime) {
             registerLink.style.cursor = "pointer"; 
             registerLink.removeAttribute("disabled"); 
             registerLink.href = "signup.php";
-
-
-            window.onpopstate = null;
-
-            // Optionally use history.go(-1) to navigate back programmatically when needed
-            history.go(-1); 
-
 
         }
     }, 1000); // Update every 1 second
@@ -281,7 +264,10 @@ function loginUser(username, password) {
                 if (match && match[1]) {
                     const lockoutTime = parseInt(match[1]);
                     setTimer(lockoutTime); // Start the countdown timer
+                    
                     localStorage.setItem("lockout-time", lockoutTime);
+
+                    
                 }
             }
         }

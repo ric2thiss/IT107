@@ -78,16 +78,16 @@
                         <input type="text" name="middleinitial" id="middleinitial" placeholder="">
                     </div>
                     <div class="form-floating grid-item-5">
-                        <!-- <label for="extensionname">Extension Name</label> -->
-                        <!-- <input type="text" name="extensionname" id="extensionname" placeholder=""> -->
-                        <select name="extensionname" class="text-center" id="extensionname" style="width: 100%;height:100%;">
+                        <label for="extensionname">Extension Name</label>
+                        <input type="text" name="extensionname" id="extensionname" placeholder="">
+                        <!-- <select name="extensionname" class="text-center" id="extensionname" style="width: 100%;height:100%;">
                             <option value="">Select Extention Name (Optional)</option>
                             <option value="I">I</option>
                             <option value="II">II</option>
                             <option value="I">III</option>
                             <option value="I">IV</option>
                             <option value="I">V</option>
-                        </select>
+                        </select> -->
                     </div>
                     <div class="form-floating grid-item-6">
                         <label for="birtdate">Birthdate</label>

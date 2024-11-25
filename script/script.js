@@ -108,8 +108,6 @@ function hasSpecialChar(label, input){
 }
 // Check for double spaces or more
 function hasDoubleSpace(str) {
-    // Check if the input starts with a space in case if the trim doesnt work 
-    // This shoud be like a call back
     if (str.startsWith(" ")) {
         return true;
     }
@@ -179,6 +177,34 @@ function validateNameExtension(extension) {
     return extension === '' || validExtensions.includes(extension) ? false : "Invalid extension name.";
 }
 
+function regexImproperCapitalization(label = "Input Field", input) {
+    const regexSecond = /^[A-Z][A-Z]/;
+    const regexThird = /^.[a-zA-Z][A-Z]/;
+    const regexFourConsecutive = /[A-Z]{4}/;
+    const regexImproperCapitalization = /[A-Z][a-z]*[A-Z]/;
+
+    if (regexSecond.test(input)) {
+        return `The second letter of "${label}" should NOT be capitalized. Only the first letter of each word MUST be capitalized.`;
+    }
+
+    if (regexThird.test(input)) {
+        return `The third letter of "${label}" should NOT be capitalized. Only the first letter of each word MUST be capitalized.`;
+    }
+
+    if (regexFourConsecutive.test(input)) {
+        return `The input "${label}" must NOT contain four consecutive uppercase letters.`;
+    }
+
+    if (regexImproperCapitalization.test(input)) {
+        return `The input "${label}" contains improper capitalization. Only the first letter of each word MUST be capitalized.`;
+    }
+
+    return false;
+}
+
+
+
+
 // Validate address fields
 function validateAddress(purok, barangay, city, province, country, zip) {
     if (!purok || !barangay || !city || !province || !country || !zip) {
@@ -189,10 +215,10 @@ function validateAddress(purok, barangay, city, province, country, zip) {
         return "No double spaces allowed in address fields.";
     }
 
-    if(validateFirstLetterCapitalization("Purok",purok) || validateFirstLetterCapitalization("Barangay",barangay) || validateFirstLetterCapitalization("City",city)
-        || validateFirstLetterCapitalization("Province",province) || validateFirstLetterCapitalization("Country",country)){
-            return validateFirstLetterCapitalization("Purok",purok) || validateFirstLetterCapitalization("Barangay",barangay) || validateFirstLetterCapitalization("City",city)
-            || validateFirstLetterCapitalization("Province",province) || validateFirstLetterCapitalization("Country",country)
+    if(regexImproperCapitalization("Purok",purok) || regexImproperCapitalization("Barangay",barangay) || regexImproperCapitalization("City",city)
+        || regexImproperCapitalization("Province",province) || regexImproperCapitalization("Country",country)){
+            return regexImproperCapitalization("Purok",purok) || regexImproperCapitalization("Barangay",barangay) || regexImproperCapitalization("City",city)
+            || regexImproperCapitalization("Province",province) || regexImproperCapitalization("Country",country)
     }
 
     const zipValidation = validateLength("Zip Code", zip, 4, 6);
@@ -237,12 +263,6 @@ function validateEmail(email) {
     return false;
 }
 
-// Empty function to check if the username already exists
-function checkUsernameExists(username) {
-    // Logic to check if the username exists in the database
-    return false; // Placeholder return statement
-}
-
 // Validate sex input
 function validateSex(sex) {
     
@@ -256,7 +276,7 @@ function validateBirthdate(date, age){
     if(!date){
         return "Please enter a birthdate.";
     }
-    if(age < 18){
+    if(age <= 18){
         return "You must be at least 18 years old to register.";
     }
     return false;
@@ -275,6 +295,9 @@ const bdate = document.getElementById("birthdate")
         const dateObject = new Date(year, month - 1, day);
         age = Math.floor((Date.now() - dateObject.getTime()) / (1000 *
         60 * 60 * 24 * 365.25));
+        if(age <= 0){
+            age = 0
+        }
         document.getElementById("age").value = age;
         console.log(date)
     })
@@ -307,6 +330,7 @@ function validatePasswordMatch(password, reEnteredPassword) {
     return null;
 }
 
+
 // Registration form validation
 function validateRegForm(event) {
     event.preventDefault();
@@ -333,15 +357,7 @@ function validateRegForm(event) {
     const password = form["password"].value.trim();
     const reenterpassword = form["reenterpassword"].value.trim();
     
-    // Check double spaces
-    // if (hasDoubleSpace(firstname) || hasDoubleSpace(lastname) || hasDoubleSpace(username)) {
-    //     // alert("No double spaces allowed in names or username.");
-    //     errors.textContent = `No double spaces allowed in names or username`;
-    //     errorDivContainer.style.transform = "translateX(0)"; 
-    //     return;
-    // }
 
-    // Array of objects for fields and their corresponding labels
     const DoubleSpacingValidation = [
         { field: firstname, label: "First Name" },
         { field: lastname, label: "Last Name" },
@@ -389,10 +405,10 @@ function validateRegForm(event) {
     }
 
     // Validate fields
-    const idnumberValidation = validateLength("ID No.", idnumber, 8, 9, "numbers (ex. 1234-5678)") ||validateIdNumber(idnumber)|| hasSpecialChar("ID No. " , idnumber);
+    const idnumberValidation = validateLength("ID No.", idnumber, 8, 9, "numbers (ex. 1234-5678)") ||   validateIdNumber(idnumber)  || hasSpecialChar("ID No. " , idnumber);
     const emailValidation = validateLength("Email", email, 5, 35, " characters long, excluding '@email.com")||validateEmail(email);
-    const firstnameValidation = validateLength("First Name", firstname, 3, 15) || hasDigit("First Name",firstname) || hasSpecialChar("First Name " , firstname)  || validateNameCapitalization("First Name ", firstname)
-    const lastnameValidation = validateLength("Last Name", lastname, 3, 15)||  hasSpecialChar("Last Name " , lastname) || hasDigit("Last Name", lastname) || validateNameCapitalization("Last Name " , lastname);
+    const firstnameValidation = validateLength("First Name", firstname, 3, 15) || regexImproperCapitalization("First Name", firstname)  || hasDigit("First Name",firstname) || hasSpecialChar("First Name " , firstname)  || validateNameCapitalization("First Name ", firstname)
+    const lastnameValidation = validateLength("Last Name", lastname, 3, 15)||  regexImproperCapitalization("Last Name", lastname) || hasSpecialChar("Last Name " , lastname) || hasDigit("Last Name", lastname) || validateNameCapitalization("Last Name " , lastname);
     const middleinitialValidation = hasDigit("Middle Initial", middleinitial) || validateMiddleInitial(middleinitial);
     const extensionnameValidation = validateNameExtension(extensionname);
     const birthdateValidation = validateBirthdate(date, age);

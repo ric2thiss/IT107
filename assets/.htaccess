@@ -4,3 +4,4 @@
         Require all granted
     </If>
 </FilesMatch>
+ErrorDocument 403 http://localhost/paquibot/views/404.html

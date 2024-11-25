@@ -19,10 +19,10 @@
     <header>
         <section class="container-90 top-nav">
             <div class="header_logo">
-                <img src="../assets/img2.svg" alt="LOGO">
+                <a href="index.php"><img src="../assets/img2.svg" alt="LOGO"></a>
             </div>
             <div class="flex gap-10" style="display:flex; align-items:center;">
-                <a href="index.php">Home</a>
+                <!-- <a href="index.php">Home</a> -->
                 <div class=" flex gap-4" id="loginregBtn">
                     <a href="login.php">LogIn</a>
                     <a href="signup.php">Register</a>
@@ -42,7 +42,7 @@
                 <div class="sm:max-w-lg">
                     <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Your Dream Home Awaits</h1>
                     <p class="mt-4 text-xl text-gray-500">Discover, buy, and sell properties effortlessly. Find your perfect home or get the best value for your real estate with our trusted platform.</p>
-                    <a href="#" class="mt-10 inline-block rounded-md border border-transparent bg-blue-900 px-8 py-3 text-center font-medium text-white hover:bg-blue-800">Back to Homepage</a>
+                    <a href="#" class="mt-10 inline-block rounded-md border border-transparent bg-blue-900 px-8 py-3 text-center font-medium text-white hover:bg-blue-800">Browse Property</a>
                 </div>
             </div>
 
